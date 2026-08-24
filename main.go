@@ -25,6 +25,7 @@ func (c *config) Load() {
 	c.db.MaxOpenConns = env.GetInt("DB_MAX_OPEN", 30)
 	c.db.MaxIdleTime = env.GetString("DB_MAX_IDLE_TIME", "15m")
 }
+
 func main() {
 	cfg := &config{}
 	cfg.Load()
