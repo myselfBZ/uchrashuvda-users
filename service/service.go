@@ -5,7 +5,7 @@ import (
 	"time"
 
 	pb "github.com/myselfBZ/uchrashuvda-isc/users"
-	"github.com/myselfBZ/user-service/store"
+	"github.com/myselfBZ/uchrashuvda-users/store"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

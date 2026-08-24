@@ -4,7 +4,7 @@ import (
 	"net"
 
 	pb "github.com/myselfBZ/uchrashuvda-isc/users"
-	"github.com/myselfBZ/user-service/store"
+	"github.com/myselfBZ/uchrashuvda-users/store"
 	"google.golang.org/grpc"
 )
 
@@ -16,7 +16,7 @@ func New(s store.Storage) *Server {
 	srv := &service{store: s}
 	pb.RegisterUserServiceServer(server, srv)
 	return &Server{
-		service: srv,
+	service: srv,
 		server: server,
 	} 
 }

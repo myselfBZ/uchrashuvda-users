@@ -1,4 +1,4 @@
-module github.com/myselfBZ/user-service
+module github.com/myselfBZ/uchrashuvda-users
 
 go 1.25.1
 

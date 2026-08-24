@@ -6,9 +6,9 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
-	"github.com/myselfBZ/user-service/env"
-	"github.com/myselfBZ/user-service/service"
-	"github.com/myselfBZ/user-service/store"
+	"github.com/myselfBZ/uchrashuvda-users/env"
+	"github.com/myselfBZ/uchrashuvda-users/service"
+	"github.com/myselfBZ/uchrashuvda-users/store"
 )
 
 type config struct {
