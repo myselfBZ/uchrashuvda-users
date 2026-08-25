@@ -12,13 +12,11 @@ import (
 )
 
 type config struct {
-	port        int
 	servicePort int
 	db          store.DBConfig
 }
 
 func (c *config) Load() {
-	c.port = env.GetInt("PORT",  8080)
 	c.servicePort = env.GetInt("SERVICE_PORT", 6767)
 	c.db.Addr = env.MustGetString("DB")
 	c.db.MaxIdleConns = env.GetInt("DB_MAX_IDLE_CONNS", 30)
