@@ -34,6 +34,6 @@ func main() {
 	st := store.NewPostgreStore(db)
 	service := service.New(st)
 	serviceAddr := fmt.Sprintf(":%d", cfg.servicePort)
-	log.Println("let's fuck")
+	log.Println("server is starting...")
 	log.Fatalf("service failure: %v", service.Run(serviceAddr))
 }
