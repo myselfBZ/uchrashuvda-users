@@ -17,6 +17,7 @@ var(
 	ErrResourceNotFound = errors.New("resource not found")
 	ErrEmailIsTaken = errors.New("this email address is already taken")
 	ErrUsernameIsTaken 	= errors.New("this username is already taken")
+	ErrPasswordEmptyPassword = errors.New("empty password provided")
 )
 
 type GetUserParams struct {
@@ -33,15 +34,15 @@ const (
 )
 
 type User struct {
-	ID          uuid.UUID `json:"id"`
-	PicturePath string    `json:"picture_path"`
-	Username    string    `json:"username"`
-	FirstName   string    `json:"first_name"`
-	LastName    string    `json:"last_name"`
-	Password    password    `json:"-"`
-	BirthDate   time.Time `json:"birth_date"`
-	Location    *Location `json:"location"`
-	Email       string    `json:"email"`
+	ID          uuid.UUID 
+	PicturePath string    
+	Username    string   
+	FirstName   string   
+	LastName    string   
+	Password    password  
+	BirthDate   time.Time
+	Location    *Location
+	Email       string    
 }
 
 
@@ -51,6 +52,9 @@ type password struct {
 }
 
 func (p *password) Set(text string) error {
+	if text == "" {
+		return ErrPasswordEmptyPassword
+	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(text), bcrypt.DefaultCost)
 	if err != nil {
 		return err
@@ -68,8 +72,8 @@ func (p *password) Compare(text string) error {
 
 
 type Location struct {
-	Lat float64 `json:"lat"`
-	Lng float64 `json:"lng"`
+	Lat float64
+	Lng float64
 }
 
 type UserCards struct {

@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"time"
 
 	pb "github.com/myselfBZ/uchrashuvda-isc/users"
 	"github.com/myselfBZ/uchrashuvda-users/store"
@@ -43,10 +42,10 @@ func (s *service) GetByEmail(ctx context.Context, r *pb.GetByEmailRequest) (*pb.
 		PicturePath: user.PicturePath,
 		Email:       user.Email,
 		Username:    user.Username,
-		// Location: &pb.Location{
-		// 	Lat: user.Location.Lat,
-		// 	Lng: user.Location.Lng,
-		// },
+		Location: &pb.Location{
+			Lat: user.Location.Lat,
+			Lng: user.Location.Lng,
+		},
 	}, nil
 }
 
@@ -72,10 +71,10 @@ func (s *service) Verify(ctx context.Context, r *pb.VerifyUserRequest) (*pb.User
 		PicturePath: user.PicturePath,
 		Email:       user.Email,
 		Username:    user.Username,
-		// Location: &pb.Location{
-		// 	Lat: user.Location.Lat,
-		// 	Lng: user.Location.Lng,
-		// },
+		Location: &pb.Location{
+			Lat: user.Location.Lat,
+			Lng: user.Location.Lng,
+		},
 	}, nil
 }
 
@@ -87,6 +86,10 @@ func (s *service) Create(ctx context.Context, r *pb.CreateUserRequest) (*pb.User
 		Username:  r.Username,
 		Email:     r.Email,
 		BirthDate: r.BirthDate.AsTime(),
+		Location: &store.Location{
+			Lat: r.Location.Lat,
+			Lng: r.Location.Lng,
+		},
 	}
 
 	if err := u.Password.Set(r.PasswordText); err != nil {
@@ -104,17 +107,31 @@ func (s *service) Create(ctx context.Context, r *pb.CreateUserRequest) (*pb.User
 		Username:  u.Username,
 		Email:     u.Email,
 		BirthDate: r.BirthDate,
+		Location: r.Location,
 	}, nil
 }
 
-func (s *service) GetByID(ctx context.Context, p *pb.GetByIDRequest) (*pb.User, error) {
+func (s *service) GetByID(ctx context.Context, r *pb.GetByIDRequest) (*pb.User, error) {
+	user, err := s.store.Get(ctx, store.GetUserParams{
+		QueryType: store.Id,
+		Val:       r.Id,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
 	return &pb.User{
-		Id:          "xxxx-xxx-xxx-xxxx",
-		Username:    "myselfBZ",
-		Email:       "boburforfun@gmail.com",
-		BirthDate:   timestamppb.New(time.Now()),
-		FirstName:   "bobur",
-		LastName:    "alivobjonov",
-		PicturePath: "/sexy/boys/picture",
+		Id:          user.ID.String(),
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		BirthDate:   timestamppb.New(user.BirthDate),
+		PicturePath: user.PicturePath,
+		Email:       user.Email,
+		Username:    user.Username,
+		Location: &pb.Location{
+			Lat: user.Location.Lat,
+			Lng: user.Location.Lng,
+		},
 	}, nil
 }

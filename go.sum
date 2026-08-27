@@ -34,6 +34,10 @@ github.com/myselfBZ/uchrashuvda-isc v1.0.3 h1:GK75jTAUAmML0GODxkP5zcY1MUyfgPKSw9
 github.com/myselfBZ/uchrashuvda-isc v1.0.3/go.mod h1:Y2PizHJL4gY0kP++n5D9543DVP42ufJ3DqbRjBOIz7Q=
 github.com/myselfBZ/uchrashuvda-isc v1.0.4 h1:aBR8tPo4nSiZ+zfi2qB9NthXuJIUEfPfqjqUX9sotUg=
 github.com/myselfBZ/uchrashuvda-isc v1.0.4/go.mod h1:Y2PizHJL4gY0kP++n5D9543DVP42ufJ3DqbRjBOIz7Q=
+github.com/myselfBZ/uchrashuvda-isc v1.0.6 h1:snGoX13lipyePE926d466Fk0TuTpL780alHTpcQw1mI=
+github.com/myselfBZ/uchrashuvda-isc v1.0.6/go.mod h1:Y2PizHJL4gY0kP++n5D9543DVP42ufJ3DqbRjBOIz7Q=
+github.com/myselfBZ/uchrashuvda-isc v1.0.7 h1:Awp98d2RFglHXEBVtDWY6mMcQ2yzutk7nCXb8OXU+o4=
+github.com/myselfBZ/uchrashuvda-isc v1.0.7/go.mod h1:Y2PizHJL4gY0kP++n5D9543DVP42ufJ3DqbRjBOIz7Q=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=

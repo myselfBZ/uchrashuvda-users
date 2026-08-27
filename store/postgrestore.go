@@ -72,20 +72,19 @@ func (s *PostgreStore) Get(ctx context.Context, params GetUserParams) (*User, er
 	`, column)
  
 	var u User
-	var lastName sql.NullString
-	var lat, lng sql.NullFloat64
+	var loc Location
  
 	err := s.db.QueryRowContext(ctx, query, params.Val).Scan(
 		&u.ID,
 		&u.FirstName,
-		&lastName,
+		&u.LastName,
 		&u.Username,
 		&u.Email,
 		&u.Password.hash,
 		&u.BirthDate,
 		&u.PicturePath,
-		&lat,
-		&lng,
+		&loc.Lat,
+		&loc.Lng,
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -93,11 +92,7 @@ func (s *PostgreStore) Get(ctx context.Context, params GetUserParams) (*User, er
 		}
 		return nil, err
 	}
-	u.LastName = lastName.String
-
-	if lat.Valid && lng.Valid {
-		u.Location = &Location{Lat: lat.Float64, Lng: lng.Float64}
-	}
+	u.Location = &loc
 	return &u, nil
 }
 
@@ -116,15 +111,16 @@ func (s *PostgreStore) Update(ctx context.Context, u *User) error {
 	`
  
 	res, err := s.db.ExecContext(ctx, query,
-		u.FirstName,
+		nullString(u.FirstName),
 		nullString(u.LastName),
-		u.Username,
-		u.Email,
-		u.Password.hash,
-		u.BirthDate,
-		u.PicturePath,
+		nullString(u.Username),
+		nullString(u.Email),
+		nullString(string(u.Password.hash)),
+		nullTimestampt(u.BirthDate),
+		// NOTE: user cannot update it to NULL, although it's allowed when the account is newly created.
+		nullString(u.PicturePath),
 		locationToEWKT(u.Location),
-		u.ID,
+		nullString(u.ID.String()),
 	)
 	if err != nil {
 		return err
@@ -148,12 +144,14 @@ func (s *PostgreStore) Create(ctx context.Context, u *User) error {
 	`
  
 	err := s.db.QueryRowContext(ctx, query,
-		u.FirstName,
+		nullString(u.FirstName),
 		nullString(u.LastName),
-		u.Username,
-		u.Email,
-		u.Password.hash,
-		u.BirthDate,
+		nullString(u.Username),
+		nullString(u.Email),
+		nullString(string(u.Password.hash)),
+		nullTimestampt(u.BirthDate),
+		// Required field, but when creating the user empty string is stored.
+		// Okay for now.
 		u.PicturePath,
 		locationToEWKT(u.Location),
 	).Scan(

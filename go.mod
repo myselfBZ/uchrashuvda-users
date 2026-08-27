@@ -7,7 +7,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.12.3
-	github.com/myselfBZ/uchrashuvda-isc v1.0.4
+	github.com/myselfBZ/uchrashuvda-isc v1.0.7
 	golang.org/x/crypto v0.52.0
 	google.golang.org/grpc v1.83.1
 	google.golang.org/protobuf v1.36.12
