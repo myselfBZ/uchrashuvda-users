@@ -109,7 +109,6 @@ func (s *PostgreStore) Update(ctx context.Context, u *User) error {
 		    loc = ST_GeogFromText($8)
 		WHERE id = $9
 	`
- 
 	res, err := s.db.ExecContext(ctx, query,
 		nullString(u.FirstName),
 		nullString(u.LastName),

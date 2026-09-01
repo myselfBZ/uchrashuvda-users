@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/golang/protobuf/ptypes/empty"
 	pb "github.com/myselfBZ/uchrashuvda-isc/users"
 	"github.com/myselfBZ/uchrashuvda-users/store"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -107,7 +108,7 @@ func (s *service) Create(ctx context.Context, r *pb.CreateUserRequest) (*pb.User
 		Username:  u.Username,
 		Email:     u.Email,
 		BirthDate: r.BirthDate,
-		Location: r.Location,
+		Location:  r.Location,
 	}, nil
 }
 
@@ -134,4 +135,32 @@ func (s *service) GetByID(ctx context.Context, r *pb.GetByIDRequest) (*pb.User, 
 			Lng: user.Location.Lng,
 		},
 	}, nil
+}
+
+func (s *service) UpdateProfileInfo(ctx context.Context, r *pb.UpdateProfileInfoRequest) (*empty.Empty, error) {
+	user, err := s.store.Get(ctx, store.GetUserParams{
+		QueryType: store.Id,
+		Val:       r.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	switch {
+	case r.FirstName != nil:
+		user.FirstName = *r.FirstName
+	case r.LastName != nil:
+		user.LastName = *r.LastName
+	case r.BirthDate != nil:
+		user.BirthDate = r.BirthDate.AsTime()
+	case r.PicturePath != nil:
+		user.PicturePath = *r.PicturePath
+	case r.Username != nil:
+		user.Username = *r.Username
+	}
+
+	if err := s.store.Update(ctx, user); err != nil {
+		return nil, err
+	}
+	return &empty.Empty{}, nil
 }
