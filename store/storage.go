@@ -17,7 +17,7 @@ var(
 	ErrResourceNotFound = errors.New("resource not found")
 	ErrEmailIsTaken = errors.New("this email address is already taken")
 	ErrUsernameIsTaken 	= errors.New("this username is already taken")
-	ErrPasswordEmptyPassword = errors.New("empty password provided")
+	ErrEmptyPassword = errors.New("empty password provided")
 )
 
 type GetUserParams struct {
@@ -53,7 +53,7 @@ type password struct {
 
 func (p *password) Set(text string) error {
 	if text == "" {
-		return ErrPasswordEmptyPassword
+		return ErrEmptyPassword 
 	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(text), bcrypt.DefaultCost)
 	if err != nil {
